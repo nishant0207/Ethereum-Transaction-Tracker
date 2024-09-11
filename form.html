@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Upload Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            padding: 10px;
+            background-color: #f4f4f9;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .response-message {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Upload Deposit Data</h2>
+
+    <form id="depositForm" style="width: 30%; padding: 30px;">
+        <label for="blockNumber">Block Number:</label><br>
+        <input type="number" id="blockNumber" name="blockNumber" required><br>
+
+        <label for="from">From Address:</label><br>
+        <input type="text" id="from" name="from" required><br>
+
+        <label for="to">To Address:</label><br>
+        <input type="text" id="to" name="to" required><br>
+
+        <label for="value">Value (ETH):</label><br>
+        <input type="text" id="value" name="value" required><br>
+
+        <label for="hash">Transaction Hash:</label><br>
+        <input type="text" id="hash" name="hash" required><br>
+
+        <button type="submit">Submit Deposit</button>
+    </form>
+
+    <div id="response" class="response-message"></div>
+
+    <script>
+        document.getElementById('depositForm').addEventListener('submit', async function (event) {
+            event.preventDefault();  // Prevent the default form submission
+    
+            const formData = {
+                blockNumber: document.getElementById('blockNumber').value,
+                from: document.getElementById('from').value,
+                to: document.getElementById('to').value,
+                value: document.getElementById('value').value,
+                hash: document.getElementById('hash').value
+            };
+    
+            try {
+                const response = await fetch('http://localhost:3000/deposits', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+    
+                const result = await response.json();
+    
+                if (response.ok) {
+                    document.getElementById('response').innerHTML = 'Deposit successfully uploaded!';
+                    document.getElementById('response').className = 'response-message success';
+                } else {
+                    document.getElementById('response').innerHTML = `Error: ${result.error}`;
+                    document.getElementById('response').className = 'response-message error';
+                }
+            } catch (error) {
+                document.getElementById('response').innerHTML = `Error: ${error.message}`;
+                document.getElementById('response').className = 'response-message error';
+            }
+        });
+    </script>
+
+</body>
+</html>

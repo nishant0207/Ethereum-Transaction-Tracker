@@ -1,0 +1,31 @@
+{
+  "name": "luganodes",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Luganodes Ethereum Deposit Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"node server.mjs\" \"node index.mjs\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alchemy-sdk": "^3.4.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
+    "express": "^4.20.0",
+    "mongoose": "^8.6.1",
+    "node-telegram-bot-api": "^0.66.0",
+    "winston": "^3.14.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
