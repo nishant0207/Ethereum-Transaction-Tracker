@@ -7,3 +7,4 @@ yarn-error.log
 
 # Optional environment variables file
 .envnode_modules/
+node_modules/
